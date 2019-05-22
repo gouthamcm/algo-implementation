@@ -1,0 +1,90 @@
+#include <iostream.h>
+ 
+// A function to merge the two halves into a sorted array
+void Merge(int a[], int l, int h, int mid)
+{
+	
+	int i, j, k;
+        int temp[h-l+1];
+	i = l;
+	k = 0;
+	j = mid + 1;
+ 
+	// To merge the two parts into temp[]
+	while (i <= mid && j <= h)
+	{
+		if (a[i] < a[j])
+		{
+			temp[k] = a[i];
+			k++;
+			i++;
+		}
+		else
+		{
+			temp[k] = a[j];
+			k++;
+			j++;
+		}
+	}
+ 
+	// Inserting all the remaining values into temp[]
+	while (i <= mid)
+	{
+		temp[k] = a[i];
+		k++;
+		i++;
+	}
+ 
+	
+	while (j <= h)
+	{
+		temp[k] = a[j];
+		k++;
+		j++;
+	}
+ 
+ 
+	// Assign sorted data stored in temp[] to a[]
+	for (i = l; i <= h; i++)
+	{
+		a[i] = temp[i-l];
+	}
+}
+ 
+// To split the array into two parts
+void MergeSort(int a[], int l, int h)
+{
+	int mid;
+	if (l < h)
+	{
+		mid=(l+h)/2;
+		MergeSort(a, l, mid);
+		MergeSort(a, mid+1, h);
+ 
+		// Merge them to get sorted output
+		Merge(a, l, h, mid);
+	}
+}
+ 
+int main()
+{
+	int n, i;
+	cout<<"\nEnter the number of elementS to be sorted: ";
+	cin>>n;
+ 
+	int a[n];
+	for(i = 0; i < n; i++)
+	{
+		cout<<"Enter element "<<i+1<<": ";
+		cin>>a[i];
+	}
+ 
+	MergeSort(a, 0, n-1);
+ 
+	// Printing the sorted array
+	cout<<"\nSorted Array \n";
+	for (i = 0; i < n; i++)
+        cout<<a[i]<<"\n";
+ 
+	return 0;
+}
